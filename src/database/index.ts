@@ -19,24 +19,18 @@ const dbOptions: Options = {
 
 const sequleize = new Sequelize(dbOptions);
 
-async function connectDB() {
-  // sequleize
-  //   .authenticate()
-  //   .then(() => {
-  //     console.log("Database connection successful");
-  //   })
-  //   .catch((error) => {
-  //     console.log(`Database authentication failed - Error: `, error);
-  //     process.exit(1);
-  //   });
-  try {
-    await sequleize.authenticate();
-    console.log("Database connection successful");
-    return sequleize;
-  } catch (error) {
-    console.log(`Database authentication failed - Error: `, error);
-    process.exit(1);
-  }
+function connectDB() {
+  sequleize
+    .authenticate()
+    .then((client) => {
+      console.log("Database connection successful");
+    })
+    .catch((error) => {
+      console.log(`Database authentication failed - Error: `, error);
+      process.exit(1);
+    });
 }
 
-export { connectDB, sequleize };
+const dbClient = connectDB();
+
+export { dbClient, sequleize };

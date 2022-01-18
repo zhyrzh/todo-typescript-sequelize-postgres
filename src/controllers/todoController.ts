@@ -37,8 +37,10 @@ const createTodo = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const updateTodo = async (req: Request, res: Response, next: NextFunction) => {
+  const todoId: number = +req.params.todoId;
+  const todo = req.body.todo;
   try {
-    // const updatedTodo = await
+    const updatedTodo = await todoServices.updateTodo(todoId, todo);
   } catch (error) {
     console.log(error);
   }
