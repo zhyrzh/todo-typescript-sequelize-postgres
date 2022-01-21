@@ -29,7 +29,6 @@ export const createTodo = async (
   try {
     const createdTodo = await TodoModel.create({
       todo: todoBody.todo,
-      isdone: todoBody.isdone,
     });
     if (createdTodo) {
       return createdTodo;
@@ -44,7 +43,7 @@ export const createTodo = async (
 export const updateTodo = async (
   todoId: number,
   todo: string
-): Promise<[number, TodoSchema[]] | undefined> => {
+): Promise<boolean | undefined> => {
   try {
     const updatedTodo: [number, TodoSchema[]] = await TodoModel.update(
       { todo: todo },
@@ -54,11 +53,7 @@ export const updateTodo = async (
         },
       }
     );
-    if (updatedTodo[0] >= 1) {
-      return updatedTodo;
-    } else {
-      return undefined;
-    }
+    return updatedTodo[0] >= 1 ? true : false;
   } catch (error) {
     console.log("Database Error: ", error);
   }

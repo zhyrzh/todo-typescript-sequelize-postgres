@@ -31,16 +31,29 @@ const createTodo = async (req: Request, res: Response, next: NextFunction) => {
   const todoBody: TodoSchema = req.body;
   try {
     const createdTodo = await todoServices.createTodo(todoBody);
+    res.status(200).json(createdTodo);
   } catch (error) {
     console.log(error);
   }
 };
 
-const updateTodo = async (req: Request, res: Response, next: NextFunction) => {
+const updateTodo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<Response | void> => {
   const todoId: number = +req.params.todoId;
   const todo = req.body.todo;
   try {
     const updatedTodo = await todoServices.updateTodo(todoId, todo);
+    if (!updatedTodo) {
+      return res.status(400).json({ success: false, message: "update fail" });
+    }
+    res.status(200).json({
+      success: true,
+      payload: updatedTodo,
+      message: "todo updated successfully",
+    });
   } catch (error) {
     console.log(error);
   }

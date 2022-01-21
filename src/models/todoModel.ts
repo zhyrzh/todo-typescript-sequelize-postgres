@@ -7,7 +7,7 @@ interface TodoAttributes {
   isdone: boolean;
 }
 
-interface TodoCreationAttributes extends Optional<TodoAttributes, "id"> {}
+interface TodoCreationAttributes extends Optional<TodoAttributes, "id" | "isdone"> {}
 
 export interface TodoSchema
   extends Model<TodoAttributes, TodoCreationAttributes>,
@@ -27,6 +27,7 @@ const TodoModel = sequleize.define<TodoSchema>(
     },
     isdone: {
       type: BOOLEAN,
+      defaultValue: false,
       allowNull: false,
     },
   },
