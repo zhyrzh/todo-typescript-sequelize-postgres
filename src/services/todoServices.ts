@@ -1,7 +1,7 @@
 import { sequleize } from "../database";
 import TodoModel, { TodoSchema } from "../models/todoModel";
 
-export const getAllTodos = async () => {
+export const getAllTodos = async (): Promise<TodoSchema[] | void> => {
   try {
     const todos = await TodoModel.findAll();
     return todos;
@@ -43,7 +43,7 @@ export const createTodo = async (
 export const updateTodo = async (
   todoId: number,
   todo: string
-): Promise<boolean | undefined> => {
+): Promise<boolean | void> => {
   try {
     const updatedTodo: [number, TodoSchema[]] = await TodoModel.update(
       { todo: todo },
@@ -59,7 +59,7 @@ export const updateTodo = async (
   }
 };
 
-export const deleteTodo = async (todoId: number): Promise<boolean | undefined> => {
+export const deleteTodo = async (todoId: number): Promise<boolean | void> => {
   try {
     const deletedTodo = await TodoModel.destroy({
       where: {
